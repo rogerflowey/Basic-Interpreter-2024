@@ -1,2 +1,29 @@
 input 时输入多个 输入表达式
 赋值=，小数(做变量名)，科学计数法
+
+INPUT 1
+2
+INPUT 1E1
+3
+INPUT 1.00
+PRINT 1
+PRINT 1E1
+PRINT 1.00
+PRINT T=1
+INPUT var
+1+1
+1
+INPUT -1
+PRINT -1
+INPUT var
+-1
+INPUT =
+INPUT INPUT
+
+1 PRINT 1
+1.00 PRINT 1
+1E1 PRINT 1
+-1 PRINT 1
+1
+1
+INPUT CEND

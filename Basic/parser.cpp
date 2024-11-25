@@ -107,9 +107,11 @@ bool isVarName(std::string token) {
       return false;
     }
   }
-  const static std::set<std::string> reserved={"LET","REM","PRINT","INPUT","END","GOTO","IF","THEN","RUN","LIST","CLEAR","QUIT","HELP"};
-  if(reserved.count(token)) {
-    return false;
+  const static std::string reserved[]={"LET","REM","PRINT","INPUT","END","GOTO","IF","THEN","RUN","LIST","CLEAR","QUIT","HELP"};
+  for(auto &k:reserved) {
+    if(token.find(k)!=std::string::npos) {
+      return false;
+    }
   }
   return true;
 }
