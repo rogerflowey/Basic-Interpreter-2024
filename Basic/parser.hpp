@@ -9,6 +9,7 @@
 
 #include <string>
 #include <iostream>
+#include <set>
 #include "exp.hpp"
 
 #include "Utils/tokenScanner.hpp"
@@ -57,5 +58,16 @@ Expression *readT(TokenScanner &scanner);
  */
 
 int precedence(std::string token);
+
+bool isNum(std::string token);
+bool isVarName(std::string token);
+bool isNumNeg(std::string token);
+
+enum NUMBER_STATE {
+  INIT,
+  NEGATIVE,
+  ACCEPT,
+  ERROR
+};
 
 #endif

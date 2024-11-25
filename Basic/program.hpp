@@ -72,7 +72,7 @@ public:
  * program in the correct sequence.
  */
 
-    void addSourceLine(int lineNumber, const std::string& line);
+    void addSourceLine(int lineNumber, const std::string& line,Statement *stmt);
 
 /*
  * Method: removeSourceLine
@@ -106,7 +106,6 @@ public:
  * exists, the memory for that statement is reclaimed.
  */
 
-    void setParsedStatement(int lineNumber, Statement *stmt);
 
 /*
  * Method: getParsedStatement
@@ -143,10 +142,22 @@ public:
     //more func to add
     //todo
 
+    void run(EvalState &state);
+
+    void end();
+
+    void gotoLine(int line_num);
+
+  void list();
 private:
 
     // Fill this in with whatever types and instance variables you need
     //todo
+
+    bool isEnd=false;
+    std::map<int,std::pair<std::string,Statement*>> lines;
+    int current_line=0;
+    int next_line=0;
 };
 
 #endif

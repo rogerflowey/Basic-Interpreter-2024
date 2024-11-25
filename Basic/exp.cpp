@@ -102,16 +102,6 @@ CompoundExp::~CompoundExp() {
  */
 
 int CompoundExp::eval(EvalState &state) {
-    if (op == "=") {
-        if (lhs->getType() != IDENTIFIER) {
-            error("Illegal variable in assignment");
-        }
-        if (lhs->getType() == IDENTIFIER && lhs->toString() == "LET")
-            error("SYNTAX ERROR");
-        int val = rhs->eval(state);
-        state.setValue(((IdentifierExp *) lhs)->getName(), val);
-        return val;
-    }
     int left = lhs->eval(state);
     int right = rhs->eval(state);
     if (op == "+") return left + right;

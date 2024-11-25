@@ -24,8 +24,8 @@
 
 class Program;
 
-/*
- * Class: Statement
+/*Statement
+ * Class:
  * ----------------
  * This class is used to represent a statement in a program.
  * The model for this class is Expression in the exp.h interface.
@@ -71,6 +71,8 @@ public:
 
     virtual void execute(EvalState &state, Program &program) = 0;
 
+
+    bool canDirectExecute;
 };
 
 
@@ -85,4 +87,125 @@ public:
  * specify its own destructor method to free that memory.
  */
 
+class REM_STMT : public Statement{
+
+public:
+
+    REM_STMT(TokenScanner &scanner);
+
+
+
+    ~REM_STMT() override;
+
+
+
+    void execute(EvalState &state, Program &program) override;
+
+
+};
+
+class LET_STMT : public Statement{
+
+public:
+    LET_STMT(TokenScanner &scanner);
+
+
+    ~LET_STMT() override;
+
+
+    void execute(EvalState &state, Program &program) override;
+
+
+
+private:
+    std::string var;
+    Expression *exp;
+};
+
+class PRINT_STMT : public Statement{
+
+public:
+  PRINT_STMT(TokenScanner &scanner);
+
+
+  ~PRINT_STMT() override;
+
+
+  void execute(EvalState &state, Program &program) override;
+
+
+
+private:
+  Expression *exp;
+};
+
+class INPUT_STMT : public Statement{
+
+public:
+  INPUT_STMT(TokenScanner &scanner);
+
+
+  ~INPUT_STMT() override;
+
+
+  void execute(EvalState &state, Program &program) override;
+
+
+
+private:
+  std::string var;
+};
+
+class END_STMT : public Statement{
+
+public:
+  END_STMT(TokenScanner &scanner);
+
+
+  ~END_STMT() override;
+
+
+  void execute(EvalState &state, Program &program) override;
+
+
+
+private:
+};
+
+class GOTO_STMT : public Statement{
+
+public:
+  GOTO_STMT(TokenScanner &scanner);
+
+
+  ~GOTO_STMT() override;
+
+
+  void execute(EvalState &state, Program &program) override;
+
+
+
+private:
+  int line_num;
+};
+
+class IF_STMT : public Statement{
+
+public:
+  IF_STMT(TokenScanner &scanner);
+
+
+  ~IF_STMT() override;
+
+
+  void execute(EvalState &state, Program &program) override;
+
+
+
+private:
+  Expression *lhs;
+  std::string cmp;
+  Expression *rhs;
+  int line_num;
+};
 #endif

@@ -29,11 +29,16 @@ int main() {
         try {
             std::string input;
             getline(std::cin, input);
-            if (input.empty())
+            if(input.empty()) {
                 continue;
+            }
             processLine(input, program, state);
         } catch (ErrorException &ex) {
-            std::cout << ex.getMessage() << std::endl;
+            if(ex.getMessage().at(0)=='S'&&ex.getMessage().at(1)=='Y') {
+                std::cout<<"SYNTAX ERROR"<<std::endl;
+            } else {
+                std::cout << ex.getMessage() << std::endl;
+            }
         }
     }
     return 0;
@@ -58,5 +63,88 @@ void processLine(std::string line, Program &program, EvalState &state) {
     scanner.setInput(line);
 
     //todo
+    int line_num=-1;
+    Statement *statement=nullptr;
+    std::string token=scanner.nextToken();
+    //std::cout<<token<<scanner.getTokenType(token)<<std::endl;
+    if(isNum(token)) {
+        line_num=stringToInteger(token);
+        if(!scanner.hasMoreTokens()) {
+            program.removeSourceLine(line_num);
+            return;
+        }
+        token=scanner.nextToken();
+    }
+    if(scanner.getTokenType(token)==WORD) {
+        //control commands
+        if(token=="RUN") {
+            program.run(state);
+            return;
+        } else if(token=="LIST") {
+            program.list();
+            return;
+        } else if(token=="CLEAR") {
+            program.clear();
+            state.Clear();
+            return;
+        } else if(token=="QUIT") {
+            exit(0);
+            return;
+        } else if(token=="HELP") {
+            std::cout<<"I don't know what can I help you,really"<<std::endl;
+            return;
+        }
+
+        //statements
+
+        if(token=="REM") {
+            statement = new REM_STMT(scanner);
+        } else if(token=="LET") {
+            statement = new LET_STMT(scanner);
+        }  else if(token=="PRINT") {
+            statement = new PRINT_STMT(scanner);
+        }   else if(token=="INPUT") {
+            statement = new INPUT_STMT(scanner);
+        }   else if(token=="END") {
+            statement = new END_STMT(scanner);
+        }   else if(token=="GOTO") {
+            statement = new GOTO_STMT(scanner);
+        }   else if(token=="IF") {
+            statement = new IF_STMT(scanner);
+        }   else {
+            error("SYNTAX ERROR1");
+            return;
+        }
+        if(scanner.hasMoreTokens()) {
+            error("SYNTAX ERROR2");
+            delete statement;
+        }
+        if(line_num==-1) {
+            if(statement->canDirectExecute) {
+                try {
+                    statement->execute(state,program);
+                    delete statement;
+                    statement=nullptr;
+                } catch (ErrorException &ex) {
+                    delete statement;
+                    if(ex.getMessage().at(0)=='S'&&ex.getMessage().at(1)=='Y') {
+                        std::cout<<"SYNTAX ERROR"<<std::endl;
+                    } else {
+                        std::cout << ex.getMessage() << std::endl;
+                    }
+                }
+            } else {
+                error("SYNTAX ERROR3");
+            }
+        } else {
+            program.addSourceLine(line_num,line,statement);
+        }
+
+    } else {
+        error("SYNTAX ERROR");
+    }
+
+
+
 }
 

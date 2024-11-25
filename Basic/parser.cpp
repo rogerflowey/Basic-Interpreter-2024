@@ -59,10 +59,10 @@ Expression *readT(TokenScanner &scanner) {
     if (type == WORD) return new IdentifierExp(token);
     if (type == NUMBER) return new ConstantExp(stringToInteger(token));
     if (token == "-") return new CompoundExp(token, new ConstantExp(0), readE(scanner));
-    if (token != "(") error("Illegal term in expression");
+    if (token != "(") error("SYNTAX ERROR7");
     Expression *exp = readE(scanner);
     if (scanner.nextToken() != ")") {
-        error("Unbalanced parentheses in expression");
+        error("SYNTAX ERROR8"  );
     }
     return exp;
 }
@@ -75,8 +75,41 @@ Expression *readT(TokenScanner &scanner) {
  */
 
 int precedence(std::string token) {
-    if (token == "=") return 1;
     if (token == "+" || token == "-") return 2;
     if (token == "*" || token == "/") return 3;
     return 0;
+}
+
+
+bool isNum(std::string token) {
+  for(auto &c:token) {
+    if(!(c>='0'&&c<='9')) {
+      return false;
+    }
+  }
+  return true;
+}
+
+bool isNumNeg(std::string token) {
+  if(token.empty()) {
+    return false;
+  }
+  if(token.at(0)=='-') {
+    return isNum(token.substr(1,token.size()));
+  } else {
+    return isNum(token);
+  }
+}
+
+bool isVarName(std::string token) {
+  for(auto &c:token) {
+    if(!isalnum(c)) {
+      return false;
+    }
+  }
+  const static std::set<std::string> reserved={"LET","REM","PRINT","INPUT","END","GOTO","IF","THEN","RUN","LIST","CLEAR","QUIT","HELP"};
+  if(reserved.count(token)) {
+    return false;
+  }
+  return true;
 }
