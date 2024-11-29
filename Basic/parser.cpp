@@ -56,8 +56,8 @@ Expression *readE(TokenScanner &scanner, int prec) {
 Expression *readT(TokenScanner &scanner) {
     std::string token = scanner.nextToken();
     TokenType type = scanner.getTokenType(token);
-    if (type == WORD) return new IdentifierExp(token);
-    if (type == NUMBER) return new ConstantExp(stringToInteger(token));
+    if (isWord(token)) return new IdentifierExp(token);
+    if (isNum(token)) return new ConstantExp(stringToInteger(token));
     if (token == "-") return new CompoundExp(token, new ConstantExp(0), readE(scanner));
     if (token != "(") error("SYNTAX ERROR7");
     Expression *exp = readE(scanner);
@@ -114,4 +114,12 @@ bool isVarName(std::string token) {
     }
   }
   return true;
+}
+
+bool isWord(std::string token) {
+  for(auto &c:token) {
+    if(!isalnum(c)) {
+      return false;
+    }
+  }
 }
