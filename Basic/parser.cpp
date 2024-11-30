@@ -58,7 +58,7 @@ Expression *readT(TokenScanner &scanner) {
     TokenType type = scanner.getTokenType(token);
     if (isNum(token)) return new ConstantExp(stringToInteger(token));
     if (isWord(token)) return new IdentifierExp(token);
-    if (token == "-") return new CompoundExp(token, new ConstantExp(0), readE(scanner));
+    if (token == "-") return new CompoundExp(token, new ConstantExp(0), readT(scanner));
     if (token != "(") error("SYNTAX ERROR7");
     Expression *exp = readE(scanner);
     if (scanner.nextToken() != ")") {
