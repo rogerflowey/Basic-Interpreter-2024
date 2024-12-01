@@ -79,19 +79,34 @@ void processLine(std::string line, Program &program, EvalState &state) {
         //control commands
         if(line_num==-1) {
             if(token=="RUN") {
+                if(scanner.hasMoreTokens()) {
+                    error("SYNTAX ERROR2");
+                }
                 program.run(state);
                 return;
             } else if(token=="LIST") {
+                if(scanner.hasMoreTokens()) {
+                    error("SYNTAX ERROR2");
+                }
                 program.list();
                 return;
             } else if(token=="CLEAR") {
+                if(scanner.hasMoreTokens()) {
+                    error("SYNTAX ERROR2");
+                }
                 program.clear();
                 state.Clear();
                 return;
             } else if(token=="QUIT") {
+                if(scanner.hasMoreTokens()) {
+                    error("SYNTAX ERROR2");
+                }
                 exit(0);
                 return;
             } else if(token=="HELP") {
+                if(scanner.hasMoreTokens()) {
+                    error("SYNTAX ERROR2");
+                }
                 std::cout<<"I don't know what can I help you,really"<<std::endl;
                 return;
             }
