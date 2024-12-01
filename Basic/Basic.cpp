@@ -22,6 +22,9 @@ void processLine(std::string line, Program &program, EvalState &state);
 /* Main program */
 
 int main() {
+
+    //freopen("testpoint.txt","r",stdin);
+
     EvalState state;
     Program program;
     //cout << "Stub implementation of BASIC" << endl;

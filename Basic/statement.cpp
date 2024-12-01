@@ -20,6 +20,9 @@ Statement::~Statement() = default;
 
 REM_STMT::REM_STMT(TokenScanner &scanner) {
   canDirectExecute=false;
+  if(!scanner.hasMoreTokens()) {
+    error("SYNTAX ERROR");
+  }
   while (scanner.hasMoreTokens()) {
     scanner.nextToken();
   }
