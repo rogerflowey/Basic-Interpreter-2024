@@ -59,8 +59,8 @@ int main() {
 void processLine(std::string line, Program &program, EvalState &state) {
     TokenScanner scanner;
     scanner.ignoreWhitespace();
-    scanner.scanNumbers();
     scanner.setInput(line);
+    scanner.addWordCharacters("0123456789");
 
     //todo
     int line_num=-1;

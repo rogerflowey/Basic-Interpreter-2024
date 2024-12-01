@@ -131,3 +131,4 @@ bool isWord(std::string token) {
   }
   return true;
 }
+
