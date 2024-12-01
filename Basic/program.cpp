@@ -88,10 +88,13 @@ int Program::getNextLineNumber(int lineNumber) {
     }
 }
 void Program::run(EvalState &state) {
+    int test=0;
     isEnd=false;
     next_line=getFirstLineNumber();
     current_line=getFirstLineNumber();
     while(!(isEnd||current_line==-1)) {
+        ++test;
+        assert(test<50000);
         next_line=getNextLineNumber(current_line);
         lines.at(current_line).second->execute(state,*this);
         current_line=next_line;
