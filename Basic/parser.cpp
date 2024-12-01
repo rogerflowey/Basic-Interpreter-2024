@@ -112,6 +112,9 @@ bool isNumNeg(std::string token) {
 }
 
 bool isVarName(std::string token) {
+  if(token.empty()) {
+    return false;
+  }
   for(auto &c:token) {
     if(!isalnum(c)) {
       return false;
@@ -127,6 +130,9 @@ bool isVarName(std::string token) {
 }
 
 bool isWord(std::string token) {
+  if(token.empty()) {
+    return false;
+  }
   for(auto &c:token) {
     if(!isalnum(c)) {
       return false;
@@ -136,6 +142,9 @@ bool isWord(std::string token) {
 }
 
 int strToInt(std::string token) {
+  if(token.empty()) {
+    assert(false);
+  }
   int out=0;
   for(auto &c:token) {
     out*=10;
