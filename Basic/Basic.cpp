@@ -77,22 +77,24 @@ void processLine(std::string line, Program &program, EvalState &state) {
     }
     if(scanner.getTokenType(token)==WORD) {
         //control commands
-        if(token=="RUN") {
-            program.run(state);
-            return;
-        } else if(token=="LIST") {
-            program.list();
-            return;
-        } else if(token=="CLEAR") {
-            program.clear();
-            state.Clear();
-            return;
-        } else if(token=="QUIT") {
-            exit(0);
-            return;
-        } else if(token=="HELP") {
-            std::cout<<"I don't know what can I help you,really"<<std::endl;
-            return;
+        if(line_num==-1) {
+            if(token=="RUN") {
+                program.run(state);
+                return;
+            } else if(token=="LIST") {
+                program.list();
+                return;
+            } else if(token=="CLEAR") {
+                program.clear();
+                state.Clear();
+                return;
+            } else if(token=="QUIT") {
+                exit(0);
+                return;
+            } else if(token=="HELP") {
+                std::cout<<"I don't know what can I help you,really"<<std::endl;
+                return;
+            }
         }
 
         //statements
