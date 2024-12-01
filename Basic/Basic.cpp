@@ -36,16 +36,21 @@ int main() {
                 continue;
             }
             processLine(input, program, state);
+            if(std::cin.eof()) {
+                error("QUIT");
+            }
         } catch (ErrorException &ex) {
             if(ex.getMessage().at(0)=='S'&&ex.getMessage().at(1)=='Y') {
                 std::cout<<"SYNTAX ERROR"<<std::endl;
             } else {
                 std::cout << ex.getMessage() << std::endl;
             }
+            if(std::cin.eof() || ex.getMessage()=="QUIT") {
+                program.clear();
+                exit(0);
+            }
         }
-        if(std::cin.eof()) {
-            exit(0);
-        }
+
     }
     return 0;
 }
@@ -108,7 +113,7 @@ void processLine(std::string line, Program &program, EvalState &state) {
                 if(scanner.hasMoreTokens()) {
                     error("SYNTAX ERROR2");
                 }
-                exit(0);
+                error("QUIT");
                 return;
             } else if(token=="HELP") {
                 if(scanner.hasMoreTokens()) {
@@ -155,6 +160,10 @@ void processLine(std::string line, Program &program, EvalState &state) {
                         std::cout<<"SYNTAX ERROR"<<std::endl;
                     } else {
                         std::cout << ex.getMessage() << std::endl;
+                    }
+                    if(std::cin.eof() || ex.getMessage()=="QUIT") {
+                        program.clear();
+                        exit(0);
                     }
                 }
             } else {
