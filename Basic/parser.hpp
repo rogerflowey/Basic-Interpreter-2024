@@ -37,7 +37,7 @@ Expression *parseExp(TokenScanner &scanner);
  * defaults to 0, which means that the function reads the entire expression.
  */
 
-Expression *readE(TokenScanner &scanner, int prec = 0);
+Expression *readE(TokenScanner &scanner, int prec = 0, bool with_neg = true);
 
 /*
  * Function: readT
@@ -47,7 +47,7 @@ Expression *readE(TokenScanner &scanner, int prec = 0);
  * identifier, or a parenthesized subexpression.
  */
 
-Expression *readT(TokenScanner &scanner);
+Expression *readT(TokenScanner &scanner,bool with_neg=false);
 
 /*
  * Function: precedence

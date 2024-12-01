@@ -81,7 +81,6 @@ INPUT_STMT::~INPUT_STMT() = default;
 
 void INPUT_STMT::execute(EvalState &state, Program &program) {
   while(true) {
-    int test=0;
     std::cout<<" ? ";
     std::string input;
     getline(std::cin, input);
@@ -93,8 +92,6 @@ void INPUT_STMT::execute(EvalState &state, Program &program) {
       state.setValue(var,-strToInt(input.substr(1,input.size()-1)));
       break;
     }
-    ++test;
-    assert(test<500);
     std::cout<<"INVALID NUMBER"<<std::endl;
   }
 }

@@ -32,14 +32,14 @@ Expression *parseExp(TokenScanner &scanner) {
  * readE calls itself recursively to read in that subexpression as a unit.
  */
 
-Expression *readE(TokenScanner &scanner, int prec) {
-    Expression *exp = readT(scanner);
+Expression *readE(TokenScanner &scanner, int prec,bool with_neg) {
+    Expression *exp = readT(scanner,with_neg);
     std::string token;
     while (true) {
         token = scanner.nextToken();
         int newPrec = precedence(token);
         if (newPrec <= prec) break;
-        Expression *rhs = readE(scanner, newPrec);
+        Expression *rhs = readE(scanner, newPrec,false);
         exp = new CompoundExp(token, exp, rhs);
     }
     scanner.saveToken(token);
@@ -53,12 +53,12 @@ Expression *readE(TokenScanner &scanner, int prec) {
  * or a parenthesized subexpression.
  */
 
-Expression *readT(TokenScanner &scanner) {
+Expression *readT(TokenScanner &scanner,bool with_neg) {
     std::string token = scanner.nextToken();
     TokenType type = scanner.getTokenType(token);
     if (isNum(token)) return new ConstantExp(strToInt(token));
     if (isWord(token)) return new IdentifierExp(token);
-    if (token == "-"){
+    if (token == "-" && with_neg){
       token=scanner.nextToken();
       if(isNum(token)) {
         return new ConstantExp(-strToInt(token));
@@ -67,7 +67,7 @@ Expression *readT(TokenScanner &scanner) {
       }
     };
     if (token != "(") error("SYNTAX ERROR7");
-    Expression *exp = readE(scanner);
+    Expression *exp = readE(scanner,0,true);
     if (scanner.nextToken() != ")") {
         error("SYNTAX ERROR8"  );
     }
