@@ -116,8 +116,8 @@ void processLine(std::string line, Program &program, EvalState &state) {
             return;
         }
         if(scanner.hasMoreTokens()) {
-            error("SYNTAX ERROR2");
             delete statement;
+            error("SYNTAX ERROR2");
         }
         if(line_num==-1) {
             if(statement->canDirectExecute) {
@@ -134,6 +134,7 @@ void processLine(std::string line, Program &program, EvalState &state) {
                     }
                 }
             } else {
+                delete statement;
                 error("SYNTAX ERROR3");
             }
         } else {
