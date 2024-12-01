@@ -40,6 +40,9 @@ int main() {
                 std::cout << ex.getMessage() << std::endl;
             }
         }
+        if(std::cin.eof()) {
+            exit(0);
+        }
     }
     return 0;
 }
@@ -61,6 +64,7 @@ void processLine(std::string line, Program &program, EvalState &state) {
     scanner.ignoreWhitespace();
     scanner.setInput(line);
     scanner.addWordCharacters("0123456789");
+
 
     //todo
     int line_num=-1;
