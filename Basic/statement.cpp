@@ -84,7 +84,10 @@ void INPUT_STMT::execute(EvalState &state, Program &program) {
     std::cout<<" ? ";
     std::string input;
     getline(std::cin, input);
-
+    if(isNum(input)) {
+      state.setValue(var,strToInt(input));
+      break;
+    }
     if(isNumNeg(input)) {
       state.setValue(var,-strToInt(input.substr(1,input.size()-1)));
       break;
