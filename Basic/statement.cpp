@@ -86,7 +86,7 @@ void INPUT_STMT::execute(EvalState &state, Program &program) {
     getline(std::cin, input);
 
     if(isNumNeg(input)) {
-      state.setValue(var,stringToInteger(input));
+      state.setValue(var,-strToInt(input.substr(1,input.size()-1)));
       break;
     }
     std::cout<<"INVALID NUMBER"<<std::endl;
@@ -111,7 +111,7 @@ void INPUT_STMT::execute(EvalState &state, Program &program) {
   GOTO_STMT::GOTO_STMT(TokenScanner &scanner) {
     std::string token=scanner.nextToken();
     if(isNum(token)) {
-      line_num=stringToInteger(token);
+      line_num=strToInt(token);
     } else {
       error("SYNTAX ERROR6");
     }
@@ -134,7 +134,7 @@ void INPUT_STMT::execute(EvalState &state, Program &program) {
     scanner.verifyToken("THEN");
     std::string token = scanner.nextToken();
     if(isNum(token)){
-      line_num=stringToInteger(token);
+      line_num=strToInt(token);
     }
     canDirectExecute=false;
   }

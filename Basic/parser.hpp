@@ -63,6 +63,7 @@ bool isNum(std::string token);
 bool isVarName(std::string token);
 bool isNumNeg(std::string token);
 bool isWord(std::string token);
+int strToInt(std::string token);
 
 enum NUMBER_STATE {
   INIT,

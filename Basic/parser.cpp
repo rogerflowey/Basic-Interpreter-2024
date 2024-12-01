@@ -56,12 +56,12 @@ Expression *readE(TokenScanner &scanner, int prec) {
 Expression *readT(TokenScanner &scanner) {
     std::string token = scanner.nextToken();
     TokenType type = scanner.getTokenType(token);
-    if (isNum(token)) return new ConstantExp(stringToInteger(token));
+    if (isNum(token)) return new ConstantExp(strToInt(token));
     if (isWord(token)) return new IdentifierExp(token);
     if (token == "-"){
       token=scanner.nextToken();
       if(isNum(token)) {
-        return new ConstantExp(-stringToInteger(token));
+        return new ConstantExp(-strToInt(token));
       } else {
         error("SYNTAX ERROR11");
       }
@@ -89,6 +89,9 @@ int precedence(std::string token) {
 
 
 bool isNum(std::string token) {
+  if(token.empty()) {
+    return false;
+  }
   for(auto &c:token) {
     if(!(c>='0'&&c<='9')) {
       return false;
@@ -102,7 +105,7 @@ bool isNumNeg(std::string token) {
     return false;
   }
   if(token.at(0)=='-') {
-    return isNum(token.substr(1,token.size()));
+    return isNum(token.substr(1,token.size()-1));
   } else {
     return isNum(token);
   }
@@ -132,3 +135,11 @@ bool isWord(std::string token) {
   return true;
 }
 
+int strToInt(std::string token) {
+  int out=0;
+  for(auto &c:token) {
+    out*=10;
+    out+=c-'0';
+  }
+  return out;
+}
