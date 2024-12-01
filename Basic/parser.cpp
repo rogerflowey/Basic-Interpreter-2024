@@ -69,6 +69,7 @@ Expression *readT(TokenScanner &scanner,bool with_neg) {
     if (token != "(") error("SYNTAX ERROR7");
     Expression *exp = readE(scanner,0,true);
     if (scanner.nextToken() != ")") {
+        delete exp;
         error("SYNTAX ERROR8"  );
     }
     return exp;
