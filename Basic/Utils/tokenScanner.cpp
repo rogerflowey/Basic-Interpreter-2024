@@ -174,7 +174,7 @@ void TokenScanner::verifyToken(std::string expected) {
     if (token != expected) {
         std::string msg = "Found \"" + token + "\"" +
                           " when expecting \"" + expected + "\"";
-        error(msg);
+        error("SYNTAX ERROR");
     }
 };
 

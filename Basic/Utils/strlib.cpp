@@ -31,6 +31,7 @@ int stringToInteger(std::string str) {
     stream >> value;
     if (!stream.eof()) stream >> std::ws;
     if (stream.fail() || !stream.eof()) {
+        assert(0);
         error("stringToInteger: Illegal integer format (" + str + ")");
     }
     return value;
