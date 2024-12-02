@@ -97,8 +97,7 @@ void INPUT_STMT::execute(EvalState &state, Program &program) {
     }
     std::cout<<"INVALID NUMBER"<<std::endl;
     if(std::cin.eof()) {
-      program.clear();
-      exit(0);
+      break;
     }
   }
 }
